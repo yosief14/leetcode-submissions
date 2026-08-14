@@ -1,3 +1,8 @@
+
+import java.lang.reflect.Array;
+import java.util.*;
+import java.lang.reflect.Constructor;
+
 /*
  * @lc app=leetcode id=1603 lang=java
  *
@@ -5,15 +10,20 @@
  */
 
 // @lc code=start
-class ParkingSystem {
+public class ParkingSystem {
 
+    private final int[] slots; 
     public ParkingSystem(int big, int medium, int small) {
-       
+        this.slots = new int[] { 0, big, medium, small};
+    }
+
+
+    public boolean addCar(int carType) {
+        if (slots[carType] == 0) return false;
+        slots[carType] --;
+        return true;
     }
     
-    public boolean addCar(int carType) {
-        
-    }
 }
 
 /**
@@ -22,4 +32,3 @@ class ParkingSystem {
  * boolean param_1 = obj.addCar(carType);
  */
 // @lc code=end
-
