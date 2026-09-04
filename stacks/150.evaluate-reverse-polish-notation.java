@@ -10,32 +10,32 @@ import java.util.Stack;
 // @lc code=start
 class Solution {
     public int evalRPN(String[] tokens) {
-       Stack <Integer>  operands = new Stack<>();
-       int fOperand,sOperand, res;
-       for (String token : tokens){
-           if(token.matches("-?\\d+")){
-            operands.add(Integer.valueOf(token));            
-           }else{
+        Stack<Integer> operands = new Stack<>();
+        int fOperand, sOperand, res;
+        for (String token : tokens) {
+            if (token.equals("*") || token.equals("/") || token.equals("-") || token.equals("+")) {
 
-            sOperand = operands.pop();
-            fOperand = operands.pop();
-            res = switch (token) {
-                case "*" -> fOperand * sOperand; 
-                case "/" -> fOperand / sOperand; 
-                case "-" -> fOperand - sOperand; 
-                case "+" -> fOperand + sOperand; 
-                default -> throw new IllegalArgumentException("Unknown operator");
-            }; 
-            operands.add(res);
-           }
+                sOperand = operands.pop();
+                fOperand = operands.pop();
+                res = switch (token) {
+                    case "*" -> fOperand * sOperand;
+                    case "/" -> fOperand / sOperand;
+                    case "-" -> fOperand - sOperand;
+                    case "+" -> fOperand + sOperand;
+                    default -> throw new IllegalArgumentException("Unknown operator");
+                };
+                operands.add(res);
+            } else {
 
-       }
-       return operands.pop();
+                operands.add(Integer.valueOf(token));
+            }
+
+        }
+        return operands.pop();
 
     }
 }
 /*
-if its * or / and 2 nums 
-*/
+ * if its * or / and 2 nums
+ */
 // @lc code=end
-
