@@ -7,8 +7,25 @@
 // @lc code=start
 class Solution {
     public int findDuplicate(int[] nums) {
-        
+        int slow = 0, fast = 0;
+        // use 2 pointers
+        while (true) {
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+            if (slow == fast) {
+                break;
+            }
+        }
+
+        int slow2 = 0;
+        while (true) {
+            slow = nums[slow];
+            slow2 = nums[slow2];
+            if (slow == slow2) {
+                return slow;
+            }
+        }
+
     }
 }
 // @lc code=end
-
