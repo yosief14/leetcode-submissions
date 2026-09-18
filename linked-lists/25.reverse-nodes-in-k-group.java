@@ -17,45 +17,46 @@
  */
 class Solution {
     public ListNode reverseKGroup(ListNode head, int k) {
- 
-        int counter = 0;
 
-        ListNode start = head;
-        while (head != null) {
-            counter++;
-            head = head.next;
-        }
-        head = start;
-        //5 - 2 = 3 < 3
-        boolean shouldBreakEarly = (counter - k) < k;
-        System.out.println("should break: " + shouldBreakEarly + " counter: " + counter);
-        counter = 0;
 
-        ListNode prev = null;
-        ListNode brkNode = head;
-        while(head != null){
-            if (counter > k && shouldBreakEarly ){
-                return start;
+        ListNode dummy = new ListNode(0, head);
+        ListNode groupPrev = dummy;
+
+        while (true) {
+            // get Kth
+            ListNode kth = getKth(groupPrev, k);
+            if (kth == null) {
+                break;
             }
-            if(counter == k){
-                // System.out.printf("counter: %d, head: %d, prev: %d, brkNode: %d \n", counter, head.val, prev.val, brkNode.val);
-                brkNode.next = head;
-                start = prev;
-                System.out.printf(" head: %d, prev: %d, brkNode.next: %d \n",  head.val, prev.next.val, brkNode.next.val);
-                prev = head;
-                head=head.next;
-                // System.out.printf(" head: %d, prev: %d, brkNode.next: %d \n",  head.val, prev.next.val, brkNode.next.val);
-                counter++;
-                continue;
+            ;
+
+            // store the start of the next group
+            ListNode groupNext = kth.next; // 4
+            // since it will be reveresed the prev = kth.next
+            ListNode prev = kth.next; // 5
+            ListNode curr = groupPrev.next;// 1
+            // means we have reached 4 or the start of the next group
+            while (curr != groupNext) {
+                ListNode temp = curr.next;
+                curr.next = prev;
+                prev = curr;
+                curr = temp;
             }
-            ListNode temp = head.next;
-            head.next=prev;
-            prev = head;
-            head = temp;
-            counter++;
+
+            ListNode temp = groupPrev.next; // 1
+            System.out.println(temp.val);
+            groupPrev.next = kth; // 1 -> 4
+            groupPrev = temp;
+            }
+            return dummy.next;
         }
-        return start;
-           
+
+        private ListNode getKth(ListNode cur, int k) {
+            while (cur != null && k > 0) {
+                cur = cur.next;
+                k--;
+            }
+            return cur;
     }
 }
 // @lc code=end
