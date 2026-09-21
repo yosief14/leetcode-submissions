@@ -1,3 +1,6 @@
+
+import java.util.Stack;
+
 /*
  * @lc app=leetcode id=226 lang=java
  *
@@ -24,15 +27,26 @@ public class InvertBinaryTree {
             return null;
         } 
         
-        TreeNode invertedRoot = new TreeNode(root.val, root.left, root.right);
-        
-        if(invertedRoot.left == null && invertedRoot.right == null){
-            return invertedRoot;
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+            TreeNode temp = node.left;
+            node.left = node.right;
+            node.right = temp;
+
+            if (node.left != null) {
+                stack.push(node.left);
+            }
+
+            if (node.right != null) {
+                stack.push(node.right);
+            }
         }
-        invertedRoot.left = invertTree(root.right);
-        invertedRoot.right =  invertTree(root.left); 
-        
-        return invertedRoot;
+
+        return root;
+
     }    // Add a test case, then Run/Debug this file
     public static void main(String[] args) {
 
