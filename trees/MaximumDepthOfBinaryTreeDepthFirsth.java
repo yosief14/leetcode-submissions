@@ -1,7 +1,7 @@
 
 import java.util.Stack;
 
-import leetcode.TreeNode;
+import trees.TreeNode;
 
 /*
  * @lc app=leetcode id=104 lang=java
